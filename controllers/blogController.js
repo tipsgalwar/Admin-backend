@@ -107,7 +107,6 @@ exports.deleteBlog = async (req, res) => {
   }
 };
 
-backend url : https://admin-backend-wbbc.onrender.com/
 
 
 
