@@ -1,4 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+
+// Define the base URL (use environment variable)
+const BASE_URL = process.env.BASE_URL || 'https://admin-backend-wbbc.onrender.com';
 
 const blogSchema = new mongoose.Schema(
   {
@@ -8,18 +11,20 @@ const blogSchema = new mongoose.Schema(
     image2: { type: String },
     content1: { type: String, required: true },
     content2: { type: String, required: true },
-    author: { type: String, required: true }, // ✅ Name as string
+    author: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-// Convert timestamps to local date-time format
-blogSchema.set("toJSON", {
+// Convert timestamps and image paths to full URLs
+blogSchema.set('toJSON', {
   transform: function (doc, ret) {
     ret.createdAt = new Date(ret.createdAt).toLocaleString();
     ret.updatedAt = new Date(ret.updatedAt).toLocaleString();
+    if (ret.image1) ret.image1 = `${BASE_URL}/${ret.image1}`;
+    if (ret.image2) ret.image2 = `${BASE_URL}/${ret.image2}`;
     return ret;
   },
 });
 
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model('Blog', blogSchema);

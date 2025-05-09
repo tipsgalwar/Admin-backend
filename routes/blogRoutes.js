@@ -3,11 +3,10 @@ const multer = require('multer');
 const router = express.Router();
 const { createBlog, getAllBlogs, getBlogById, updateBlog, deleteBlog } = require('../controllers/blogController');
 
-// Setup Multer for image uploads
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
+    destination: (req, file, cb) => cb(null, 'tmp/'), // Use temporary folder
     filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
-});
+  });
 
 const upload = multer({ storage });
 
